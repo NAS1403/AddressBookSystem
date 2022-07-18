@@ -37,9 +37,8 @@ public class AddressBook {
      }
 
 
-    void editContact(){
-        System.out.println("Enter address book name ");
 
+    void editContact(){
         System.out.println("Enter the first name of person to edit");
         String firstName = scr.next().toLowerCase();
         System.out.println("Enter the last name of person to edit");
@@ -86,24 +85,31 @@ public class AddressBook {
 
 
     void deleteContact(){
-        System.out.println("Enter the first name of person to delete");
-        String firstName = scr.next().toLowerCase();
-        System.out.println("Enter the last name of person to delete");
-        String lastName = scr.next().toLowerCase();
-        boolean found = false;
-        for (Contacts contact : list){
-            if (firstName.equals(contact.getFirstName().toLowerCase())) {
-                if (lastName.equals(contact.getLastName())) {
-                    list.remove(contact);
-                    found = true;
-                    System.out.println("Contact deleted successfully");
-                    break;
+        if(list.isEmpty()){
+            System.out.println("Address book is empty");
+        }
+        else {
+            System.out.println("Enter the first name of person to delete");
+            String firstName = scr.next().toLowerCase();
+            System.out.println("Enter the last name of person to delete");
+            String lastName = scr.next().toLowerCase();
+            boolean found = false;
+            for (Contacts contact :list){
+                if (firstName.equals(contact.getFirstName().toLowerCase())) {
+                    if (lastName.equals(contact.getLastName())) {
+                        list.remove(contact);
+                        found = true;
+                        System.out.println("Contact deleted successfully");
+                        break;
+                    }
                 }
             }
+            if (!found){
+                System.out.println("No contact found");
+            }
         }
-        if (!found){
-            System.out.println("No contact found");
-        }
+
+
 
     }
 
@@ -119,6 +125,8 @@ public class AddressBook {
         }
 
     }
+
+
 
 }
 
