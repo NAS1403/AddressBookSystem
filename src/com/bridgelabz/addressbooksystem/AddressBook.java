@@ -3,12 +3,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
-    Contacts contact = new Contacts();
+
     ArrayList<Contacts> list = new ArrayList<>();
 
     Scanner scr = new Scanner(System.in);
 
     void addContact(){
+        Contacts contact = new Contacts();
         System.out.print("Enter first name: ");
         contact.setFirstName(scr.next());
         System.out.print("Enter last name:");
@@ -26,16 +27,16 @@ public class AddressBook {
         contact.setPhoneNumber(scr.nextLong());
         System.out.print("Enter email address: ");
         contact.setEmail(scr.next());
-        list.add(new Contacts(contact.getFirstName(), contact.getLastName(), contact.getAddress(), contact.getCity(), contact.getState(), contact.getZip(),contact.getPhoneNumber(), contact.getEmail()));
+        list.add(contact);
     }
 
     void editContact(){
         System.out.println("Enter the first name of person to edit");
-        String firstName = scr.next();
+        String firstName = scr.next().toLowerCase();
 
         boolean found = false;
         for (Contacts contact : list){
-        if(firstName.equals(contact.getFirstName())) {
+        if(firstName.equals(contact.getFirstName().toLowerCase())) {
             System.out.println("Edit the details of person");
             System.out.print("Enter first name: ");
             contact.setFirstName(scr.next());
@@ -73,10 +74,10 @@ public class AddressBook {
 
     void deleteContact(){
         System.out.println("Enter the first name of person to delete");
-        String firstName = scr.next();
+        String firstName = scr.next().toLowerCase();
         boolean found = false;
         for (Contacts contact : list){
-            if (firstName.equals(contact.getFirstName())){
+            if (firstName.equals(contact.getFirstName().toLowerCase())){
                 list.remove(contact);
                 found = true;
                 System.out.println("Contact deleted successfully");
