@@ -21,7 +21,8 @@ public class AddressBookMain {
                     3) To display Contacts
                     4) To delete contact
                     5) To add address book or select addressBook
-                    6) To exit""");
+                    6) To search contact
+                    7) To exit""");
 
             int option = scr.nextInt();
             switch (option) {
@@ -58,6 +59,13 @@ public class AddressBookMain {
                     chooseAddressBook();
                     break;
                 case 6:
+                    try {
+                        map.get(currentAddressBook).searchContact();
+                    } catch (Exception e) {
+                        System.out.println("\nNo AddressBook Found\n");
+                    }
+                    break;
+                case 7:
                     exit = true;
                     break;
                 default:
@@ -66,7 +74,6 @@ public class AddressBookMain {
         }
         System.out.println(map);
     }
-
 
     static void chooseAddressBook() {
         System.out.println("""

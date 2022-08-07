@@ -92,6 +92,50 @@ public class AddressBook {
     }
 
 
+    void searchContact(){
+        if(list.isEmpty()){
+            System.out.println("No contacts to search in the addressBook");
+            return;
+        }
+        boolean exit = false;
+        while(!exit) {
+        System.out.println("""
+                Enter option
+                1) To search by City
+                2) To search by State
+                3) To exit
+                """);
+        int option = scr.nextInt();
+
+            switch (option) {
+                case 1:
+                    System.out.println("Enter the city to search contacts");
+                    String city = scr.next().toLowerCase();
+                    for (Contacts contacts : list) {
+                        if (contacts.getCity().toLowerCase().contains(city)) {
+                            System.out.println(contacts);
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("Enter the city to search contacts");
+                    String state = scr.next().toLowerCase();
+                    for (Contacts contacts : list) {
+                        if (contacts.getState().toLowerCase().contains(state)) {
+                            System.out.println(contacts);
+                        }
+                    }
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
     void deleteContact(){
         if(list.isEmpty()){
             System.out.println("Address book is empty");
