@@ -1,0 +1,6 @@
+abhishek
+Contacts{firstName='abhishek', lastName='sagar', address='fsd', city='fddsf', state='ds', zip=fsdf, phoneNumber=ds, email='fd'}
+
+Contacts{firstName='sagar', lastName='abhishek', address='asd', city='asds', state='ad', zip=sad, phoneNumber=sad, email='sadsa'}
+sagar
+Contacts{firstName='sfds', lastName='fds', address='fds', city='fds', state='fds', zip=fdsdfds, phoneNumber=dfdsf, email='fdsf'}
