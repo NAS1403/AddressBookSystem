@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbooksystem;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 
 import java.io.*;
@@ -17,7 +18,7 @@ public class FileReaderWriter {
             System.out.println(string);
     }
 
-    static void readCSVFile(File file) throws IOException {
+    static void readCSVJsonFile(File file) throws IOException {
         Scanner scanner = new Scanner(file);
         scanner.useDelimiter(",");
         while (scanner.hasNext()) {
@@ -48,6 +49,18 @@ public class FileReaderWriter {
             data.add(contactData);
         }
         csvWriter.writeAll(data);
+        fileWriter.close();
+    }
+
+    public static void writeJson(ArrayList<Contacts> arrayList, String addressBookName) throws IOException {
+        File file = new File(PATH + addressBookName + ".json");
+        FileWriter fileWriter = new FileWriter(file);
+        Gson gson = new Gson();
+        String data="";
+        for (Contacts contact : arrayList) {
+            data = data.concat(gson.toJson(contact)+"\n");
+        }
+        fileWriter.write(data);
         fileWriter.close();
     }
 }
