@@ -1,13 +1,18 @@
 package com.bridgelabz.addressbooksystem;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBook {
 
+
     ArrayList<Contacts> list = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
+    private static final String PATH = "C:\\Users\\abhis\\IdeaProjects\\AddressBookSystem\\src\\main\\resources\\";
 
 
     void addContact() throws IOException {
@@ -37,7 +42,34 @@ public class AddressBook {
         contact.setEmail(scanner.next());
         list.sort(Comparator.comparing(Contacts::getFirstName));
         list.add(contact);
-        writeData();
+    }
+
+
+    void writeAddressBook(ArrayList<Contacts> arrayList,String addressBookName) throws IOException {
+        System.out.println("Enter\n 1) To write to txt file\n 2) To write to CSV file");
+        int option = scanner.nextInt();
+        switch (option){
+            case 1:
+                FileReaderWriter.writeTxt(arrayList, addressBookName);
+                break;
+            case 2:
+                FileReaderWriter.writeCSV(arrayList, addressBookName);
+                break;
+        }
+
+    }
+
+    void readAddressBook(String addressBookName) throws IOException {
+        System.out.println("Select option \n1.read from text file \n2.read from csv file");
+        int option = scanner.nextInt();
+        switch (option) {
+            case 1:
+                FileReaderWriter.readTxtFile(new File(FileReaderWriter.PATH.concat(addressBookName+".txt")));
+                break;
+            case 2:
+                FileReaderWriter.readCSVFile(new File(FileReaderWriter.PATH.concat( addressBookName +".csv")));
+                break;
+        }
     }
 
 
@@ -98,8 +130,8 @@ public class AddressBook {
             return;
         }
         list.sort(Comparator.comparing(Contacts::getFirstName));
-//        list.forEach(System.out::println);
-        readData();
+        list.forEach(System.out::println);
+//        readData();
     }
 
 
@@ -128,16 +160,6 @@ public class AddressBook {
         }
     }
 
-
-        void writeData() throws IOException {
-        FileIOService fileIOService = new FileIOService();
-            fileIOService.writeData();
-        }
-
-        void readData() throws IOException {
-            FileIOService fileIOService = new FileIOService();
-            fileIOService.readData();
-        }
 
     void viewContacts() {
         if (list.isEmpty()) {
@@ -197,7 +219,7 @@ public class AddressBook {
         }
     }
 
-    void sortByCity(){
+    void sortByCity() {
         if (list.isEmpty()) {
             System.out.println("No contacts in the addressBook");
             return;
@@ -206,7 +228,7 @@ public class AddressBook {
         list.forEach(System.out::println);
     }
 
-    void sortByState(){
+    void sortByState() {
         if (list.isEmpty()) {
             System.out.println("No contacts in the addressBook");
             return;
@@ -215,7 +237,7 @@ public class AddressBook {
         list.forEach(System.out::println);
     }
 
-    void sortByZipCode(){
+    void sortByZipCode() {
         if (list.isEmpty()) {
             System.out.println("No contacts in the addressBook");
             return;

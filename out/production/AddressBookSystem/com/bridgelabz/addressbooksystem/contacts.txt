@@ -1,4 +1,0 @@
-
-Contacts{firstName='abhishek', lastName='sagar', address='sf', city='sad', state='sd', zip=ds, phoneNumber=fsd, email='ffsdf'}
-
-Contacts{firstName='sagar', lastName='abhishek', address='fds', city='dsf', state='ds', zip=f, phoneNumber=dsf, email='ds'}
