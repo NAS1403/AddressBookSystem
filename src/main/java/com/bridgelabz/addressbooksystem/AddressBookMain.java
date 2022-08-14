@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbooksystem;
 
+import java.io.IOException;
 import java.util.*;
 
 public class AddressBookMain {
@@ -24,7 +25,9 @@ public class AddressBookMain {
                     4) To delete contact
                     5) To add address book or select addressBook
                     6) To view contact in current addressBook
-                    7) To exit""");
+                    7) To write addressBook to Files
+                    8) To Read addressBook from files
+                    9) To exit""");
 
             int option = scr.nextInt();
             switch (option) {
@@ -68,6 +71,19 @@ public class AddressBookMain {
                     }
                     break;
                 case 7:
+                    try {
+                        map.get(currentAddressBook).writeAddressBook(map.get(currentAddressBook).list,currentAddressBook);
+                    } catch (IOException e) {
+                        System.out.println("Catch BLock");
+                    }
+                    break;
+                case 8:
+                    try {
+                        map.get(currentAddressBook).readAddressBook(currentAddressBook);
+                    } catch (IOException e) {
+                        System.out.println("Catch BLock");
+                    }
+                case 9:
                     exit = true;
                     break;
                 default:
