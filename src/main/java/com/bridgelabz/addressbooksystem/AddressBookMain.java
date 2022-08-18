@@ -1,17 +1,18 @@
 package com.bridgelabz.addressbooksystem;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 public class AddressBookMain {
     static Scanner scr = new Scanner(System.in);
     static AddressBook addressBook;
     static HashMap<String, AddressBook> map = new HashMap<>();
-    public static ArrayList<String>  addressBooks = new ArrayList<>();
+    public static ArrayList<String> addressBooks = new ArrayList<>();
     static String currentAddressBook;
     static String addressBookName;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         System.out.println("Welcome to Address Book Program");
 
@@ -27,7 +28,7 @@ public class AddressBookMain {
                     6) To view contact in current addressBook
                     7) To write addressBook to Files
                     8) To Read addressBook from files
-                    9) To print names of all addressBooks
+                    9) TO update database contacts                  
                     10) To exit""");
 
             int option = scr.nextInt();
@@ -38,7 +39,6 @@ public class AddressBookMain {
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
-
                     break;
                 case 2:
                     try {
@@ -49,7 +49,7 @@ public class AddressBookMain {
                     break;
                 case 3:
                     try {
-                       addressBook.viewContacts();
+                        addressBook.viewContacts();
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
@@ -73,20 +73,24 @@ public class AddressBookMain {
                     break;
                 case 7:
                     try {
-                        map.get(currentAddressBook).writeAddressBook(map.get(currentAddressBook).list,currentAddressBook);
+                        map.get(currentAddressBook).writeAddressBook(map.get(currentAddressBook).list, currentAddressBook);
                     } catch (IOException e) {
                         System.out.println("Catch BLock");
                     }
                     break;
                 case 8:
                     try {
-                        map.get(currentAddressBook).readAddressBook(currentAddressBook);
-                    } catch (IOException e) {
+                        AddressBook.readAddressBook();
+                    } catch (IOException | SQLException e) {
                         System.out.println("Catch BLock");
                     }
                     break;
                 case 9:
-                    System.out.println(addressBooks);
+                    try {
+                        DatabaseOperations.updateData();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 10:
                     exit = true;
@@ -99,8 +103,8 @@ public class AddressBookMain {
 
     static void chooseAddressBook() {
         System.out.println("""
-        Press 1 to add AddressBook
-        Press 2 to select AddressBook""");
+                Press 1 to add AddressBook
+                Press 2 to select AddressBook""");
 
         int option = scr.nextInt();
         switch (option) {

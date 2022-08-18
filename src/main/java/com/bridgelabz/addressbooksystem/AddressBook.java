@@ -3,6 +3,7 @@ package com.bridgelabz.addressbooksystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,10 +11,12 @@ public class AddressBook {
 
 
     ArrayList<Contacts> list = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
 
-    void addContact(){
+
+    void addContact() throws SQLException {
+
         System.out.println("Enter the first name");
         String firstName = scanner.next().toLowerCase();
         System.out.println("Enter the last name");
@@ -40,13 +43,16 @@ public class AddressBook {
         contact.setEmail(scanner.next());
         list.sort(Comparator.comparing(Contacts::getFirstName));
         list.add(contact);
+        DatabaseOperations.addContactToDatabase(contact);
     }
 
 
-    void writeAddressBook(ArrayList<Contacts> arrayList,String addressBookName) throws IOException {
+
+
+    void writeAddressBook(ArrayList<Contacts> arrayList, String addressBookName) throws IOException {
         System.out.println("Enter\n 1) To write to txt file\n 2) To write to CSV file\n 3) To write to Json File");
         int option = scanner.nextInt();
-        switch (option){
+        switch (option) {
             case 1:
                 FileReaderWriter.writeTxt(arrayList, addressBookName);
                 break;
@@ -56,22 +62,46 @@ public class AddressBook {
             case 3:
                 FileReaderWriter.writeJson(arrayList, addressBookName);
                 break;
-        }
 
+        }
     }
 
-    void readAddressBook(String addressBookName) throws IOException {
-        System.out.println("Enter\n 1) To Read from txt file\n 2) To Read from CSV file\n 3) To Read from Json File");
+
+
+     static void readAddressBook() throws IOException, SQLException {
+        System.out.println("Enter\n 1) To Read from txt file\n 2) To Read from CSV file\n 3) To Read from Json File\n 4) To read from addressBook database");
         int option = scanner.nextInt();
+         String addressBookName = null;
+        if(!(option == 4)){
+            System.out.println("Enter the addressBook name");
+            addressBookName = scanner.next().toLowerCase();
+        }
         switch (option) {
             case 1:
-                FileReaderWriter.readTxtFile(new File(FileReaderWriter.PATH.concat(addressBookName+".txt")));
+                try{
+                    FileReaderWriter.readTxtFile(new File(FileReaderWriter.PATH.concat(addressBookName + ".txt")));
+                }catch(Exception e){
+                    System.out.println("File not found");
+                }
                 break;
             case 2:
-                FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat( addressBookName +".csv")));
+                try{
+                    FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat(addressBookName + ".csv")));
+                }catch(Exception e){
+                    System.out.println("File not found");
+                }
                 break;
             case 3:
-                FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat( addressBookName +".json")));
+                try{
+                    FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat(addressBookName + ".json")));
+                }catch(Exception e){
+                System.out.println("File not found");
+            }
+                break;
+            case 4:
+                DatabaseOperations.retrieveDataByDates();
+                break;
+            default:
                 break;
         }
     }
@@ -128,7 +158,7 @@ public class AddressBook {
     }
 
 
-    void displayContact(){
+    void displayContact() {
         if (list.isEmpty()) {
             System.out.println("No contacts in the addressBook");
             return;
