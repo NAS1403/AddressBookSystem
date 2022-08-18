@@ -13,8 +13,8 @@
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-   <dependencies>
 
+   <dependencies>
        <dependency>
            <groupId>com.opencsv</groupId>
            <artifactId>opencsv</artifactId>
@@ -30,9 +30,11 @@
            <artifactId>gson</artifactId>
            <version>2.9.1</version>
        </dependency>
-
-
-
+       <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+           <version>5.1.6</version>
+       </dependency>
    </dependencies>
 
 
